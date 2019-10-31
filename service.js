@@ -11,7 +11,7 @@ exports.getMessage = body =>
   new Promise((resolve, reject) => {
     assistant.message(
       {
-        workspace_id: '99b8a09d-6499-4f89-b53a-13e8d5e7ab07',
+        workspace_id: '',
         input: { text: body.input }
       },
       function(err, response) {
