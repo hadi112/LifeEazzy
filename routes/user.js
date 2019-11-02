@@ -8,9 +8,9 @@ router.get('/profile',isLoggedin,function(req,res){
     res.send({msg:'profile seen || loggedin || profile page'})
 });
 
-router.use('/',notLoggedin,function(req,res){
+/*router.use('/',notLoggedin,function(req,res){
     res.send({msg:'making sure user is logged in!!'})
-});
+});*/
 
 router.get('/',(req,res)=>{
     res.send('hello world');
@@ -35,10 +35,11 @@ router.post('/register',(req,res)=>{
     });
     Usercontroller.adduser(newUser, (err, user) => {
         if (err) {
-            console.log(err);
+            //console.log(err);
             let message = "";
             if (err.errors.username) message = "Username is already taken. ";
-            if (err.errors.email) message += "Email already exists.";
+            if (err.errors.email) message += "Email already exists or ";
+            if(err) message += "email not correct";
             return res.json({
                 success: false,
                 message
