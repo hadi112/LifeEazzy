@@ -8,15 +8,12 @@ const session = require('express-session');
 const port = process.env.port || 5000;
 var mongostore = require('connect-mongo')(session);
 const flash = require('connect-flash');
-const ask = require('./controller').ask;
 
 //initialize them first
 mongoose.set('useCreateIndex', true);
 app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(flash());
-app.use(bodyParser.json(bodyParserJsonConfig()));
-
 require('../LifeEazzy/config/passport');
 
 //Database connected
@@ -36,6 +33,8 @@ const users = require('../LifeEazzy/routes/user')
 app.use('/user', users);
 const products = require('../LifeEazzy/routes/shoppingcart')
 app.use('/shoppingcart', products);
+const service = require('../LifeEazzy/routes/service');
+app.use('/service',service);
 
 //passport middleware
 app.use(passport.session());
@@ -52,16 +51,6 @@ app.use(function(req,res){
     next();
 });
 
-const  bodyParser = require('body-parser'),
-  DEFAULT_BODY_SIZE_LIMIT = 1024 * 1024 * 10,
-  DEFAULT_PARAMETER_LIMIT = 10000;
-
-const bodyParserJsonConfig = () => ({
-   parameterLimit: DEFAULT_PARAMETER_LIMIT,
-   limit: DEFAULT_BODY_SIZE_LIMIT
-});
-
-app.post('/ask', ask);
 
 //port = 5000 
 app.listen(port, () => {
